@@ -7,4 +7,8 @@ target 'LogInLogUp' do
 
   # Pods for LogInLogUp
 
+pod 'Firebase/Core'
+pod 'Firebase/Auth'
+pod 'Firebase/Database'
+
 end

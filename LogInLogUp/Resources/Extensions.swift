@@ -100,9 +100,12 @@ extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationC
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
-        print(info)
+        guard let selectedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else {
+            return
+        }
         
-//        self.imageView
+        self.imageView.image = selectedImage
+        
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

@@ -6,7 +6,8 @@
 //
 
 import UIKit
-
+import FirebaseAuth
+import Firebase
 class RegisterViewController: UIViewController {
 
     let scrollView:UIScrollView = {
@@ -20,6 +21,8 @@ class RegisterViewController: UIViewController {
         image.image  = UIImage(systemName: "person.circle")
         image.contentMode = .scaleAspectFit
         image.tintColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
+        image.layer.masksToBounds = true
+        image.contentMode = .scaleAspectFill
         
         // Apply gradient background color
         let gradientLayer = CAGradientLayer()
@@ -31,35 +34,36 @@ class RegisterViewController: UIViewController {
         image.layer.shadowColor = UIColor.black.cgColor
         image.layer.shadowRadius = 7
         image.layer.shadowOpacity = 0.4
-        image.layer.shadowOffset = CGSize(width: 5, height: 5)
+        image.layer.shadowOffset = CGSize(width: 2, height: 2)
         return image
     }()
     
     private let firstNameField: UITextField = {
-        let emailField = UITextField()
-        emailField.autocapitalizationType = .none
-        emailField.autocorrectionType = .no
-        emailField.layer.cornerRadius = 12
-        emailField.layer.borderWidth = 1
-        emailField.returnKeyType = .continue
-        emailField.layer.borderColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
+        let firstName = UITextField()
+        firstName.autocapitalizationType = .none
+        firstName.autocorrectionType = .no
+        firstName.layer.cornerRadius = 12
+        firstName.layer.borderWidth = 1
+        firstName.returnKeyType = .continue
+        firstName.layer.borderColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
+        firstName.textColor = .white
         
         // Customize the placeholder text color
         let placeholderText = "Firts name"
         let placeholderColor = UIColor.systemCyan // Desired color for the placeholder text
 
         let attributedPlaceholder = NSAttributedString(string: placeholderText, attributes: [NSAttributedString.Key.foregroundColor: placeholderColor])
-        emailField.attributedPlaceholder = attributedPlaceholder
+        firstName.attributedPlaceholder = attributedPlaceholder
         
-        emailField.leftView =  UIView(frame: CGRect(x: 0, y: 0, width: 13, height: 0))
-        emailField.leftViewMode = .always
+        firstName.leftView =  UIView(frame: CGRect(x: 0, y: 0, width: 13, height: 0))
+        firstName.leftViewMode = .always
         
         // making look beautiful 3D
-        emailField.layer.shadowRadius = 7
-        emailField.layer.shadowOpacity = 0.4
-        emailField.layer.shadowOffset = CGSize(width: 5, height: 5)
-        emailField.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
-       return emailField
+        firstName.layer.shadowRadius = 7
+        firstName.layer.shadowOpacity = 0.4
+        firstName.layer.shadowOffset = CGSize(width: 2, height: 2)
+        firstName.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
+       return firstName
     }()
     private let secondNameField: UITextField = {
         let secondName = UITextField()
@@ -69,6 +73,7 @@ class RegisterViewController: UIViewController {
         secondName.layer.borderWidth = 1
         secondName.returnKeyType = .continue
         secondName.layer.borderColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
+        secondName.textColor = .white
         
         // Customize the placeholder text color
         let placeholderText = "Second name"
@@ -82,7 +87,7 @@ class RegisterViewController: UIViewController {
         
         secondName.layer.shadowRadius = 7
         secondName.layer.shadowOpacity = 0.4
-        secondName.layer.shadowOffset = CGSize(width: 5, height: 5)
+        secondName.layer.shadowOffset = CGSize(width: 2, height: 2)
         secondName.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
        return secondName
     }()
@@ -96,7 +101,8 @@ class RegisterViewController: UIViewController {
         emailField.layer.borderWidth = 1
         emailField.returnKeyType = .continue
         emailField.layer.borderColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
-                
+        emailField.textColor = .white
+        
         // Customize the placeholder text color
         let placeholderText = "Your e-mail..."
         let placeholderColor = UIColor.systemCyan // Desired color for the placeholder text
@@ -108,7 +114,7 @@ class RegisterViewController: UIViewController {
         emailField.leftViewMode = .always
         emailField.layer.shadowRadius = 7
         emailField.layer.shadowOpacity = 0.4
-        emailField.layer.shadowOffset = CGSize(width: 5, height: 5)
+        emailField.layer.shadowOffset = CGSize(width: 2, height: 2)
         emailField.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
        return emailField
     }()
@@ -122,6 +128,7 @@ class RegisterViewController: UIViewController {
         password.layer.borderWidth = 1
         password.returnKeyType = .continue
         password.layer.borderColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
+        password.textColor = .white
         
         // Customize the placeholder text color
         let placeholderText = "Create password"
@@ -136,7 +143,7 @@ class RegisterViewController: UIViewController {
         
         password.layer.shadowRadius = 7
         password.layer.shadowOpacity = 0.4
-        password.layer.shadowOffset = CGSize(width: 5, height: 5)
+        password.layer.shadowOffset = CGSize(width: 2, height: 2)
         password.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
        return password
     }()
@@ -162,7 +169,7 @@ class RegisterViewController: UIViewController {
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowRadius = 7
         button.layer.shadowOpacity = 0.4
-        button.layer.shadowOffset = CGSize(width: 5, height: 5)
+        button.layer.shadowOffset = CGSize(width: 2, height: 2)
         button.backgroundColor = #colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1)
         return button
     }()
@@ -199,6 +206,9 @@ class RegisterViewController: UIViewController {
                                  y: 100,
                                  width: size,
                                  height: size)
+        
+        imageView.layer.cornerRadius = imageView.width/2.0
+        
         firstNameField.frame = CGRect(x: 30,
                                       y: imageView.bottom+20,
                                       width: scrollView.width-60,
@@ -251,7 +261,9 @@ class RegisterViewController: UIViewController {
         
     }
     
-    //Firebase Log in
+    // MARK: - Firebase Log in
+    
+    
     func alertUserLoginError(){
         let alert = UIAlertController(title: "Woops!", message: "Please enter correct information", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))

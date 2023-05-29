@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E6BB1942A2491E100CE7249 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E6BB1932A2491E100CE7249 /* DatabaseManager.swift */; };
 		1E7A48C82A1F899900785615 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A48C72A1F899900785615 /* AppDelegate.swift */; };
 		1E7A48CA2A1F899900785615 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A48C92A1F899900785615 /* SceneDelegate.swift */; };
 		1E7A48CC2A1F899900785615 /* MainPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7A48CB2A1F899900785615 /* MainPageViewController.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1E6BB1932A2491E100CE7249 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		1E7A48C42A1F899900785615 /* LogInLogUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LogInLogUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E7A48C72A1F899900785615 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1E7A48C92A1F899900785615 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				1E7A48C72A1F899900785615 /* AppDelegate.swift */,
 				1E7A48C92A1F899900785615 /* SceneDelegate.swift */,
 				1E7A48EC2A1F963D00785615 /* Extensions.swift */,
+				1E6BB1932A2491E100CE7249 /* DatabaseManager.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -304,6 +307,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E7A48E22A1F8DAB00785615 /* LoginViewController.swift in Sources */,
+				1E6BB1942A2491E100CE7249 /* DatabaseManager.swift in Sources */,
 				1E7A48ED2A1F963D00785615 /* Extensions.swift in Sources */,
 				1E7A48E42A1F8DB800785615 /* RegisterViewController.swift in Sources */,
 				1E7A48CC2A1F899900785615 /* MainPageViewController.swift in Sources */,

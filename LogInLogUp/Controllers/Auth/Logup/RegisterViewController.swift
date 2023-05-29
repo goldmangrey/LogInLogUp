@@ -8,6 +8,9 @@
 import UIKit
 import FirebaseAuth
 import Firebase
+import FirebaseCore
+import FirebaseDatabase
+
 class RegisterViewController: UIViewController {
 
     let scrollView:UIScrollView = {
@@ -192,6 +195,8 @@ class RegisterViewController: UIViewController {
         imageView.isUserInteractionEnabled = true
         scrollView.isUserInteractionEnabled = true
         
+        RegisterButton.addTarget(self, action: #selector(didTapRegisterButton), for: .touchUpInside)
+        
         let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapChangeProfilePicture))
         imageView.addGestureRecognizer(gesture)
         
@@ -259,13 +264,42 @@ class RegisterViewController: UIViewController {
             return
         }
         
+        // MARK: - Firebase Log in
+        
+        DatabaseManager.shared.userExists(with: email, competion: { [weak self] exists in
+            
+            guard let strongSelf = self else {
+                return
+            }
+            
+            guard !exists else {
+                //user already exists
+                strongSelf.alertUserLoginError(message: "WHOOPS😅! User already exists")
+
+                return
+            }
+            
+            FirebaseAuth.Auth.auth().createUser(withEmail: email, password: password, completion:{
+                authResult, error in
+
+                guard authResult != nil, error == nil else {
+                    print("Error creating user")
+                    return
+                }
+                
+                DatabaseManager.shared.insertUser(with: TestAppUser(firstName: firstName, secondName: secondName, emailAddress: email))
+                strongSelf.navigationController?.dismiss(animated: true, completion: nil)
+
+            })
+        })
     }
     
-    // MARK: - Firebase Log in
+ 
     
     
-    func alertUserLoginError(){
-        let alert = UIAlertController(title: "Woops!", message: "Please enter correct information", preferredStyle: .alert)
+    //MARK: - Alert function
+    func alertUserLoginError(message: String = "Please enter correct information"){
+        let alert = UIAlertController(title: "Woops!", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
         present(alert, animated: true)
     }
